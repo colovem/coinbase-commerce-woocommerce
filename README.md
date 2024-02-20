@@ -83,7 +83,7 @@ If this is checked, these are saved within your `wp-content/uploads/wc-logs/` fo
 
 To use this plugin with your WooCommerce store you will need:
 
-- [WordPress] (tested up to 5.6.4)
+- [WordPress] (tested up to 6.4.3)
 - [WooCommerce] (tested up to 8.6.1)
 
 ## Frequently Asked Questions
