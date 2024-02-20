@@ -83,8 +83,8 @@ If this is checked, these are saved within your `wp-content/uploads/wc-logs/` fo
 
 To use this plugin with your WooCommerce store you will need:
 
-- [WordPress] (tested up to 4.9.7)
-- [WooCommerce] (tested up to 3.4.3)
+- [WordPress] (tested up to 5.6.4)
+- [WooCommerce] (tested up to 8.6.1)
 
 ## Frequently Asked Questions
 
@@ -101,6 +101,13 @@ Yes, the list of all integrations can be found here: [Coinbase Commerce Integrat
 This project is licensed under the Apache 2.0 License
 
 ## Changelog
+
+## 1.3.1
+
+- Fixed HPOS support
+- Fixed plugin behavior to prevent duplicate execution of tasks, avoiding errors when the order status changes.
+- Added additional checks to ensure tasks are executed only once, preventing repetition in the 'Timeline' code.
+- Addressed issue where orders were manually deleted in WooCommerce admin section before payment time expired, ensuring proper handling of such scenarios.
 
 ## 1.3
 
