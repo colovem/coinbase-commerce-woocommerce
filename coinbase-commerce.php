@@ -29,28 +29,30 @@ along with Coinbase WooCommerce. If not, see https://www.gnu.org/licenses/gpl-3.
 */
 
 function cb_init_gateway() {
-	// If WooCommerce is available, initialise WC parts.
-	
-	/** DOCBLOCK - Makes linter happy.
-	 * 
-	 * @since today
-	 */
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-		require_once 'class-wc-gateway-coinbase.php';
-		add_action( 'init', 'cb_wc_register_blockchain_status' );
-		add_filter( 'woocommerce_valid_order_statuses_for_payment', 'cb_wc_status_valid_for_payment', 10, 2 );
-		add_action( 'cb_check_orders', 'cb_wc_check_orders' );
-		add_filter( 'woocommerce_payment_gateways', 'cb_wc_add_coinbase_class' );
-		add_filter( 'wc_order_statuses', 'cb_wc_add_status' );
-		add_action( 'woocommerce_admin_order_data_after_order_details', 'cb_order_meta_general' );
-		add_action( 'woocommerce_order_details_after_order_table', 'cb_order_meta_general' );
-		add_filter( 'woocommerce_email_order_meta_fields', 'cb_custom_woocommerce_email_order_meta_fields', 10, 3 );
-		add_filter( 'woocommerce_email_actions', 'cb_register_email_action' );
-		add_action( 'woocommerce_email', 'cb_add_email_triggers' );
-	}
+    // If WooCommerce is available, initialise WC parts.
+    
+    if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+        require_once 'class-wc-gateway-coinbase.php';
+        add_action( 'init', 'cb_wc_register_blockchain_status' );
+        add_filter( 'woocommerce_valid_order_statuses_for_payment', 'cb_wc_status_valid_for_payment', 10, 2 );
+        add_action( 'cb_check_orders', 'cb_wc_check_orders' );
+        add_filter( 'woocommerce_payment_gateways', 'cb_wc_add_coinbase_class' );
+        add_filter( 'wc_order_statuses', 'cb_wc_add_status' );
+        add_action( 'woocommerce_admin_order_data_after_order_details', 'cb_order_meta_general' );
+        add_action( 'woocommerce_order_details_after_order_table', 'cb_order_meta_general' );
+        add_filter( 'woocommerce_email_order_meta_fields', 'cb_custom_woocommerce_email_order_meta_fields', 10, 3 );
+        add_filter( 'woocommerce_email_actions', 'cb_register_email_action' );
+        add_action( 'woocommerce_email', 'cb_add_email_triggers' );
+
+        // Woo HPOS support
+        add_action('before_woocommerce_init', function(){
+            if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+                \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+            }
+        });
+    }
 }
 add_action( 'plugins_loaded', 'cb_init_gateway' );
-
 
 // Setup cron job.
 
